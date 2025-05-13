@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <h3>Select Columns to Analyze</h3>
+    <form id="columnForm">
+      <div id="checkboxContainer"></div>
+      <br>
+      <button type="button" onclick="saveSelection()">Save Selection</button>
+    </form>
+
+    <script>
+      function loadColumns() {
+        google.script.run.withSuccessHandler(function(columns) {
+          var container = document.getElementById("checkboxContainer");
+          container.innerHTML = "";
+
+          columns.forEach(function(column) {
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = column;
+            checkbox.id = column;
+            container.appendChild(checkbox);
+
+            var label = document.createElement("label");
+            label.htmlFor = column;
+            label.appendChild(document.createTextNode(column));
+            container.appendChild(label);
+
+            container.appendChild(document.createElement("br"));
+          });
+        }).getSheetColumns();
+      }
+
+      function saveSelection() {
+        var selectedColumns = [];
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach(function(checkbox) {
+          selectedColumns.push(checkbox.value);
+        });
+
+        google.script.run.saveColumnSelection(selectedColumns);
+        google.script.host.close();
+      }
+
+      function runAnalysisNow() {
+        google.script.run
+          .withSuccessHandler(() => alert("Analysis complete!"))
+          .withFailureHandler(e => alert("Error: " + e.message))
+          .processAllReflections();
+      }
+
+      window.onload = loadColumns;
+    </script>
+  </body>
+</html>

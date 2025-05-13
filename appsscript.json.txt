@@ -1,0 +1,26 @@
+{
+  "timeZone": "America/Phoenix",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/script.container.ui",
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "urlFetchWhitelist": [
+    "https://language.googleapis.com/"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Reflection Sentiment Analyzer",
+      "logoUrl": "https://drive.google.com/uc?export=view&id=14ogVZiOxNp6xntXJLC6fXlKAGIyOKMdK",
+      "useLocaleFromApp": true
+    },
+    "sheets": {
+      "homepageTrigger": {
+        "runFunction": "onOpen"
+      }
+    }
+  }
+}
